@@ -1,0 +1,16 @@
+AWS EC2 --> https://youtu.be/0z69N5tUJ6w?si=Ck0S55WVo9oM5XNb
+Google App Engine --> https://www.youtube.com/watch?v=txB0qheXlHE
+Apex programming in Salesforce --> https://youtu.be/rUeL8kZbjPI?si=una5AALMt2quX4y3
+Custom Application in Salesforce --> https://youtu.be/n4Nx7YD5_mY?si=FNgT2odBA5Fl0_dI
+
+
+Google App Engine -
+pwd
+ls
+git clone https://github.com/dnyanesh3005/lp2.git
+
+cd lp2
+
+python bfs.py
+
+
