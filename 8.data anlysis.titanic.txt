@@ -1,0 +1,31 @@
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore')
+
+df=pd.read_csv("tiatanic.csv")
+df.info()
+df.describe()
+df.isnull()
+df.isnull().sum()
+df.shape
+df.isnull().sum()
+df.dtypes
+df.columns
+df.head()
+df.tail()
+
+sns.histplot(x='Fare',data=df)
+sns.set(rc={'figure.figsize':(3,3)})
+
+sns.displot(x='Age',data=df,bins=70)
+sns.set(rc={'figure.figsize':(5,5)})
+
+sns.catplot(x='Survived',data=df,kind='count',hue='Pclass')
+sns.set(rc={'figure.figsize':(5,5)})
+
+sns.catplot(x='Survived',data=df,kind='count',hue='Sex')
+sns.set(rc={'figure.figsize':(5,5)})

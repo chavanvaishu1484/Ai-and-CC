@@ -1,0 +1,45 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df=pd.read_csv('tiatanic.csv')
+df
+
+df.head()
+df.isnull().sum()
+df.tail()
+df.describe()
+df.info()
+df.shape
+df['Age'].isnull().sum()
+df['Cabin'].isnull().sum()
+df.describe()
+df.info()
+df.dtypes
+df.shape
+
+df['Age']=df[['Age','Pclass']].apply(impute_age,axis=1)
+def impute_age(cols):
+    Age = cols[0]
+    Pclass = cols[1]
+    if pd.isnull(Age):
+        if Pclass == 1:
+            return 37
+        elif Pclass == 2:
+            return 29
+        else:
+            return 24
+        
+    else:
+        return Age
+
+df['Age'].isnull().sum()
+
+df.drop('Cabin',axis=1,inplace=True)
+
+df.dropna(inplace=True)
+df
+
+df['Pclass']=df['Pclass'].astype(int)
+# pd.get_dummies(df['Pclass'])              one hot handling
+df

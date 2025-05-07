@@ -1,0 +1,15 @@
+import seaborn as sns
+df = sns.load_dataset('titanic')
+df
+df.head()
+sns.boxplot(x='sex', y='age', data=df, hue='survived')
+
+sns.catplot(x='survived',data=df, kind='count',hue='sex')
+sns.set(rc={'figure.figsize':(5,5)})
+
+# Observations
+We created a box plot of variables 'age & 'sex' & used survival as the hue
+Ther we visualized three variables Age, Sex & Survival. Two out of these are categorical and one is numerical
+Now in addition to the information about the age of each gender, you can also see the distribution of passengers who survived
+For instance, we can see that among the male passengers, on average more younger people survived as compared to older ones
+Also, we can see that among the survived passangers, more female survived as complared to male.

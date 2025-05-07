@@ -1,0 +1,48 @@
+import pandas as pd
+
+data = pd.read_csv("loan_data.csv")
+data
+
+data.head()
+data.tail()
+data.info()
+data.describe()
+data.isnull().sum()
+mean = data.mean(numeric_only=True)
+mean
+
+data['LoanAmount'].mean()
+
+data['Loan_Amount_Term'].mean()
+median = data.median(numeric_only=True)
+median
+data['Age'].median()
+minimum = data.min(numeric_only=True)
+minimum
+maximum = data.max(numeric_only=True)
+maximum
+std = data.std(numeric_only=True)
+std
+
+data['Age'].std()
+
+data.groupby('Age').count()
+import numpy as np
+data=pd.read_csv("iris.csv")
+data
+data.groupby('Species').count()
+data.groupby('Species').mean()
+data.Species.mode()
+
+data.SepalWidthCm.std()
+data.SepalLengthCm.std()
+import seaborn as sns
+sns.violinplot(x="SepalWidthCm", y="Species", data=data)
+
+numeric_df = data.select_dtypes(include=[np.number])  # Select numeric columns
+correlation_matrix = numeric_df.corr(method='pearson')
+
+correlation_matrix
+
+data.skew()
+

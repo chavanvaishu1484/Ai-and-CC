@@ -1,0 +1,75 @@
+import pandas as pd
+import numpy as np
+
+# Generate sample data
+np.random.seed(0)
+data = {
+    'Student_ID': range(1, 101),
+    'Math': np.random.randint(50, 100, 100).astype(object),
+    'Physics': np.random.randint(40, 95, 100),
+    'English': np.random.randint(30, 90, 100).astype(object),
+    'Attendance': np.random.uniform(0.7, 1, 100).astype(object),
+    'GPA': np.random.uniform(2.5, 4, 100)
+}
+
+# Introduce some missing values and inconsistencies
+data['Math'][10] = np.nan
+data['Physics'][20] = 200  # introducing an outlier
+data['English'][30] = 'A'  # introducing inconsistency
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+df
+
+missing_values = df.isnull().sum()
+print("Missing Values:\n", missing_values)
+
+# Check for inconsistencies in 'English_Score'
+inconsistent_data = pd.to_numeric(df['English'], errors='coerce').isnull().sum()
+print("Inconsistencies in English_Score:", inconsistent_data)
+
+# Dealing with missing values and inconsistencies
+# For missing values, we can either drop rows or fill them with a suitable value
+df['Math'].fillna(df['Math'].mean(), inplace=True)
+df['Physics'] = np.where(df['Physics'] > 100, np.nan, df['Physics'])  # replacing outlier with NaN
+df['English'] = pd.to_numeric(df['English'], errors='coerce')  # Convert to numeric, converting inconsistencies to NaN
+df.dropna(inplace=True)  # Drop rows with NaN values
+
+# Check if missing values and inconsistencies are handled
+print("After handling missing values and inconsistencies:")
+print(df.isnull().sum())
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import zscore
+numeric_cols = df.select_dtypes(include=np.number).columns.tolist()
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+sns.boxplot(data=df[numeric_cols])
+plt.title('Boxplot of Numeric Variables')
+
+# Data transformation on 'GPA' variable
+# Log transformation to decrease skewness
+z_scores = np.abs(zscore(df[numeric_cols]))
+threshold = 3
+outlier_indices = np.where(z_scores > threshold)[0]
+df_cleaned = df.drop(outlier_indices)
+df_cleaned.dropna(subset=['GPA'], inplace=True)
+df_cleaned['GPA'] = np.log1p(df_cleaned['GPA'])
+
+
+plt.figure(figsize=(12, 6))
+
+# Before: original GPA (not log-transformed)
+plt.subplot(1, 2, 1)
+sns.histplot(df['GPA'].dropna(), kde=True)
+plt.title('Before Transformation')
+
+# After: log-transformed GPA
+plt.subplot(1, 2, 2)
+sns.histplot(np.log1p(df['GPA'].dropna()), kde=True)
+plt.title('After Transformation')
+
+plt.tight_layout()
+plt.show()
